@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/wojciech-malota-wojcik/build"
-	"github.com/wojciech-malota-wojcik/libexec"
+	"github.com/outofforest/build"
+	"github.com/outofforest/libexec"
 )
 
 // GoBuildPkg builds go package

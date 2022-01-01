@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/wojciech-malota-wojcik/libexec"
+	"github.com/outofforest/libexec"
 )
 
 // GitFetch fetches changes from repo
