@@ -11,7 +11,7 @@ import (
 
 // GoBuildPkg builds go package
 func GoBuildPkg(ctx context.Context, pkg, out string, cgo bool) error {
-	cmd := exec.Command("go", "build", "-o", out, "./"+pkg)
+	cmd := exec.Command("go", "build", "-trimpath", "-ldflags=-w -s", "-o", out, "./"+pkg)
 	if !cgo {
 		cmd.Env = append([]string{"CGO_ENABLED=0"}, os.Environ()...)
 	}
