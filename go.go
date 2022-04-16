@@ -20,6 +20,7 @@ func GoBuildPkg(ctx context.Context, pkg, out string, cgo bool) error {
 
 // GoLint runs golangci linter, runs go mod tidy and checks that git tree is clean
 func GoLint(ctx context.Context, deps build.DepsFunc) error {
+	deps(EnsureGo)
 	if err := libexec.Exec(ctx, exec.Command("golangci-lint", "run", "--config", "build/.golangci.yaml")); err != nil {
 		return err
 	}
@@ -33,10 +34,12 @@ func GoImports(ctx context.Context) error {
 }
 
 // GoTest runs go test
-func GoTest(ctx context.Context) error {
+func GoTest(ctx context.Context, deps build.DepsFunc) error {
+	deps(EnsureGo)
 	return libexec.Exec(ctx, exec.Command("go", "test", "-count=1", "-race", "./..."))
 }
 
-func goModTidy(ctx context.Context) error {
+func goModTidy(ctx context.Context, deps build.DepsFunc) error {
+	deps(EnsureGo)
 	return libexec.Exec(ctx, exec.Command("go", "mod", "tidy"))
 }
