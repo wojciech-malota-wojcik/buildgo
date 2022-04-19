@@ -22,7 +22,7 @@ func GoBuildPkg(ctx context.Context, pkg, out string, cgo bool) error {
 func GoLint(ctx context.Context, deps build.DepsFunc) error {
 	deps(EnsureGo, EnsureGolangCI)
 	cmd := exec.Command("golangci-lint", "run", "--config", "build/.golangci.yaml")
-	cmd.Env = []string{"PATH=" + os.Getenv("PATH")}
+	cmd.Env = os.Environ()
 	if err := libexec.Exec(ctx, cmd); err != nil {
 		return err
 	}
