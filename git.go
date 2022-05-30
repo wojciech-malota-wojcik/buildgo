@@ -3,11 +3,11 @@ package buildgo
 import (
 	"bytes"
 	"context"
-	"errors"
 	"fmt"
 	"os/exec"
 
 	"github.com/outofforest/libexec"
+	"github.com/pkg/errors"
 )
 
 // GitFetch fetches changes from repo
