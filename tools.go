@@ -9,9 +9,9 @@ import (
 var tools = map[string]build.Tool{
 	"go": {
 		Name:    "go",
-		Version: "1.18.2",
-		URL:     "https://go.dev/dl/go1.18.2.linux-amd64.tar.gz",
-		Hash:    "sha256:e54bec97a1a5d230fc2f9ad0880fcbabb5888f30ed9666eca4a91c5a32e86cbc",
+		Version: "1.18.3",
+		URL:     "https://go.dev/dl/go1.18.3.linux-amd64.tar.gz",
+		Hash:    "sha256:956f8507b302ab0bb747613695cdae10af99bbd39a90cae522b7c0302cc27245",
 		Binaries: []string{
 			"go/bin/go",
 			"go/bin/gofmt",
