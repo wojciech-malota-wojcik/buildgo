@@ -10,6 +10,7 @@ import (
 	"github.com/outofforest/build"
 	"github.com/outofforest/libexec"
 	"github.com/outofforest/logger"
+	"github.com/pkg/errors"
 	"github.com/ridge/must"
 	"go.uber.org/zap"
 )
@@ -22,7 +23,10 @@ func GoBuildPkg(ctx context.Context, pkg, out string, cgo bool) error {
 	if !cgo {
 		cmd.Env = append([]string{"CGO_ENABLED=0"}, os.Environ()...)
 	}
-	return libexec.Exec(ctx, cmd)
+	if err := libexec.Exec(ctx, cmd); err != nil {
+		return errors.Wrapf(err, "building go package '%s' failed", pkg)
+	}
+	return nil
 }
 
 // GoLint runs golangci linter, runs go mod tidy and checks that git tree is clean
@@ -34,7 +38,10 @@ func GoLint(ctx context.Context, deps build.DepsFunc) error {
 		log.Info("Running linter", zap.String("path", path))
 		cmd := exec.Command("golangci-lint", "run", "--config", config)
 		cmd.Dir = path
-		return libexec.Exec(ctx, cmd)
+		if err := libexec.Exec(ctx, cmd); err != nil {
+			return errors.Wrapf(err, "linter errors found in module '%s'", path)
+		}
+		return nil
 	})
 	if err != nil {
 		return err
@@ -51,7 +58,10 @@ func GoTest(ctx context.Context, deps build.DepsFunc) error {
 		log.Info("Running go tests", zap.String("path", path))
 		cmd := exec.Command("go", "test", "-count=1", "-shuffle=on", "-race", "./...")
 		cmd.Dir = path
-		return libexec.Exec(ctx, cmd)
+		if err := libexec.Exec(ctx, cmd); err != nil {
+			return errors.Wrapf(err, "unit tests failed in module '%s'", path)
+		}
+		return nil
 	})
 }
 
@@ -63,7 +73,10 @@ func GoModTidy(ctx context.Context, deps build.DepsFunc) error {
 		log.Info("Running go mod tidy", zap.String("path", path))
 		cmd := exec.Command("go", "mod", "tidy")
 		cmd.Dir = path
-		return libexec.Exec(ctx, cmd)
+		if err := libexec.Exec(ctx, cmd); err != nil {
+			return errors.Wrapf(err, "'go mod tidy' failed in module '%s'", path)
+		}
+		return nil
 	})
 }
 
