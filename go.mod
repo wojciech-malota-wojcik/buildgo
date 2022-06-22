@@ -3,7 +3,7 @@ module github.com/outofforest/buildgo
 go 1.16
 
 require (
-	github.com/outofforest/build v1.8.10
+	github.com/outofforest/build v1.8.11
 	github.com/outofforest/libexec v0.3.2
 	github.com/outofforest/logger v0.3.2
 	github.com/pkg/errors v0.9.1
