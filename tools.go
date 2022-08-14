@@ -7,23 +7,26 @@ import (
 )
 
 var tools = map[string]build.Tool{
+	// https://go.dev/dl/
 	"go": {
 		Name:    "go",
-		Version: "1.18.3",
-		URL:     "https://go.dev/dl/go1.18.3.linux-amd64.tar.gz",
-		Hash:    "sha256:956f8507b302ab0bb747613695cdae10af99bbd39a90cae522b7c0302cc27245",
+		Version: "1.19",
+		URL:     "https://go.dev/dl/go1.19.linux-amd64.tar.gz",
+		Hash:    "sha256:464b6b66591f6cf055bc5df90a9750bf5fbc9d038722bb84a9d56a2bea974be6",
 		Binaries: []string{
 			"go/bin/go",
 			"go/bin/gofmt",
 		},
 	},
+
+	// https://github.com/golangci/golangci-lint/releases/
 	"golangci": {
 		Name:    "golangci",
-		Version: "1.46.2",
-		URL:     "https://github.com/golangci/golangci-lint/releases/download/v1.46.2/golangci-lint-1.46.2-linux-amd64.tar.gz",
-		Hash:    "sha256:242cd4f2d6ac0556e315192e8555784d13da5d1874e51304711570769c4f2b9b",
+		Version: "1.48.0",
+		URL:     "https://github.com/golangci/golangci-lint/releases/download/v1.48.0/golangci-lint-1.48.0-linux-amd64.tar.gz",
+		Hash:    "sha256:127c5c9d47cf3a3cf4128815dea1d9623d57a83a22005e91b986b0cbceb09233",
 		Binaries: []string{
-			"golangci-lint-1.46.2-linux-amd64/golangci-lint",
+			"golangci-lint-1.48.0-linux-amd64/golangci-lint",
 		},
 	},
 }
