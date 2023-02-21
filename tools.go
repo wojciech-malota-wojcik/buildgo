@@ -10,9 +10,9 @@ var tools = map[string]build.Tool{
 	// https://go.dev/dl/
 	"go": {
 		Name:    "go",
-		Version: "1.19.3",
-		URL:     "https://go.dev/dl/go1.19.3.linux-amd64.tar.gz",
-		Hash:    "sha256:74b9640724fd4e6bb0ed2a1bc44ae813a03f1e72a4c76253e2d5c015494430ba",
+		Version: "1.20.1",
+		URL:     "https://go.dev/dl/go1.20.1.linux-amd64.tar.gz",
+		Hash:    "sha256:000a5b1fca4f75895f78befeb2eecf10bfff3c428597f3f1e69133b63b911b02",
 		Binaries: []string{
 			"go/bin/go",
 			"go/bin/gofmt",
@@ -22,11 +22,11 @@ var tools = map[string]build.Tool{
 	// https://github.com/golangci/golangci-lint/releases/
 	"golangci": {
 		Name:    "golangci",
-		Version: "1.50.1",
-		URL:     "https://github.com/golangci/golangci-lint/releases/download/v1.50.1/golangci-lint-1.50.1-linux-amd64.tar.gz",
-		Hash:    "sha256:4ba1dc9dbdf05b7bdc6f0e04bdfe6f63aa70576f51817be1b2540bbce017b69a",
+		Version: "1.51.2",
+		URL:     "https://github.com/golangci/golangci-lint/releases/download/v1.51.2/golangci-lint-1.51.2-linux-amd64.tar.gz",
+		Hash:    "sha256:4de479eb9d9bc29da51aec1834e7c255b333723d38dbd56781c68e5dddc6a90b",
 		Binaries: []string{
-			"golangci-lint-1.50.1-linux-amd64/golangci-lint",
+			"golangci-lint-1.51.2-linux-amd64/golangci-lint",
 		},
 	},
 
