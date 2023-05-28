@@ -6,7 +6,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 
 	"github.com/outofforest/build"
 	"github.com/outofforest/libexec"
@@ -81,42 +80,9 @@ func GoModTidy(ctx context.Context, deps build.DepsFunc) error {
 	})
 }
 
-// GoProto generates go code from proto files in the package
-func GoProto(ctx context.Context, deps build.DepsFunc, pkg string) error {
-	deps(EnsureGoProto)
-	return filepath.WalkDir(".", func(path string, d fs.DirEntry, err error) error {
-		if d.IsDir() {
-			files, err := os.ReadDir(path)
-			if err != nil {
-				return errors.WithStack(err)
-			}
-			for _, f := range files {
-				if f.IsDir() {
-					continue
-				}
-				if !strings.HasSuffix(f.Name(), ".pb.go") && !strings.HasSuffix(f.Name(), ".pb.gw.go") {
-					continue
-				}
-				if err := os.Remove(filepath.Join(path, f.Name())); err != nil {
-					return errors.WithStack(err)
-				}
-			}
-			return nil
-		}
-
-		if !strings.HasSuffix(path, ".proto") {
-			return nil
-		}
-
-		dir := filepath.Dir(path)
-		return libexec.Exec(ctx, exec.Command(
-			"protoc",
-			"--go_out", dir,
-			"--go_opt=paths=source_relative",
-			"--proto_path", dir,
-			path,
-		))
-	})
+func rebuildMe(ctx context.Context, deps build.DepsFunc) error {
+	deps(EnsureGo)
+	return GoBuildPkg(ctx, "build/cmd", must.String(filepath.EvalSymlinks(must.String(os.Executable()))), false)
 }
 
 func onModule(fn func(path string) error) error {
