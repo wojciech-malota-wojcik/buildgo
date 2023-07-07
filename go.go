@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"github.com/outofforest/build"
 	"github.com/outofforest/libexec"
@@ -54,9 +55,34 @@ func GoLint(ctx context.Context, deps build.DepsFunc) error {
 func GoTest(ctx context.Context, deps build.DepsFunc) error {
 	deps(EnsureGo)
 	log := logger.Get(ctx)
+
+	rootDir := must.String(filepath.EvalSymlinks(must.String(filepath.Abs(".."))))
+	repoDir := must.String(filepath.EvalSymlinks(must.String(filepath.Abs("."))))
+	coverageDir := filepath.Join(repoDir, "bin", ".coverage")
+	if err := os.MkdirAll(coverageDir, 0o700); err != nil {
+		return errors.WithStack(err)
+	}
+
 	return onModule(func(path string) error {
+		relPath, err := filepath.Rel(rootDir, must.String(filepath.EvalSymlinks(must.String(filepath.Abs(path)))))
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		coverageName := strings.ReplaceAll(relPath, "/", "-")
+		coverageFile := filepath.Join(coverageDir, coverageName)
+
 		log.Info("Running go tests", zap.String("path", path))
-		cmd := exec.Command("go", "test", "-count=1", "-shuffle=on", "-race", "./...")
+		cmd := exec.Command(
+			"go",
+			"test",
+			"-count=1",
+			"-shuffle=on",
+			"-race",
+			"-cover", "./...",
+			"-coverpkg", "./...",
+			"-coverprofile", coverageFile,
+			"./...",
+		)
 		cmd.Dir = path
 		if err := libexec.Exec(ctx, cmd); err != nil {
 			return errors.Wrapf(err, "unit tests failed in module '%s'", path)
