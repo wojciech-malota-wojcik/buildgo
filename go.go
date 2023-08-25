@@ -17,9 +17,20 @@ import (
 )
 
 // GoBuildPkg builds go package
-func GoBuildPkg(ctx context.Context, pkg, out string, cgo bool) error {
+func GoBuildPkg(ctx context.Context, pkg, out string, cgo bool, tags ...string) error {
 	logger.Get(ctx).Info("Building go package", zap.String("package", pkg), zap.String("binary", out))
-	cmd := exec.Command("go", "build", "-trimpath", "-ldflags=-w -s", "-o", must.String(filepath.Abs(out)), ".")
+
+	args := []string{
+		"build",
+		"-trimpath",
+		"-ldflags=-w -s",
+		"-o", must.String(filepath.Abs(out)),
+	}
+	if len(tags) > 0 {
+		args = append(args, "-tags", strings.Join(tags, ","))
+	}
+
+	cmd := exec.Command("go", append(args, ".")...)
 	cmd.Dir = pkg
 	if !cgo {
 		cmd.Env = append([]string{"CGO_ENABLED=0"}, os.Environ()...)
@@ -52,7 +63,7 @@ func GoLint(ctx context.Context, deps build.DepsFunc) error {
 }
 
 // GoTest runs go test
-func GoTest(ctx context.Context, deps build.DepsFunc) error {
+func GoTest(ctx context.Context, deps build.DepsFunc, tags ...string) error {
 	deps(EnsureGo)
 	log := logger.Get(ctx)
 
@@ -68,21 +79,22 @@ func GoTest(ctx context.Context, deps build.DepsFunc) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		coverageName := strings.ReplaceAll(relPath, "/", "-")
-		coverageFile := filepath.Join(coverageDir, coverageName)
 
-		log.Info("Running go tests", zap.String("path", path))
-		cmd := exec.Command(
-			"go",
+		args := []string{
 			"test",
 			"-count=1",
 			"-shuffle=on",
 			"-race",
 			"-cover", "./...",
 			"-coverpkg", "./...",
-			"-coverprofile", coverageFile,
-			"./...",
-		)
+			"-coverprofile", filepath.Join(coverageDir, strings.ReplaceAll(relPath, "/", "-")),
+		}
+		if len(tags) > 0 {
+			args = append(args, "-tags", strings.Join(tags, ","))
+		}
+
+		log.Info("Running go tests", zap.String("path", path))
+		cmd := exec.Command("go", append(args, "./...")...)
 		cmd.Dir = path
 		if err := libexec.Exec(ctx, cmd); err != nil {
 			return errors.Wrapf(err, "unit tests failed in module '%s'", path)
