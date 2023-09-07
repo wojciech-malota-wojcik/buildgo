@@ -1,6 +1,10 @@
 package buildgo
 
-import "github.com/outofforest/build"
+import (
+	"context"
+
+	"github.com/outofforest/build"
+)
 
 // AddCommands adds go and git commands
 func AddCommands(commands map[string]build.Command) {
@@ -8,5 +12,7 @@ func AddCommands(commands map[string]build.Command) {
 	commands["git/fetch"] = build.Command{Fn: GitFetch, Description: "Fetches changes from repository"}
 	commands["dev/lint"] = build.Command{Fn: GoLint, Description: "Lints go code"}
 	commands["dev/tidy"] = build.Command{Fn: GoModTidy, Description: "Runs go mod tidy"}
-	commands["dev/test"] = build.Command{Fn: GoTest, Description: "Runs go unit tests"}
+	commands["dev/test"] = build.Command{Fn: func(ctx context.Context, deps build.DepsFunc) error {
+		return GoTest(ctx, deps)
+	}, Description: "Runs go unit tests"}
 }
