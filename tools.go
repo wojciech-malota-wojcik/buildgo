@@ -34,17 +34,17 @@ var tools = map[string]build.Tool{
 }
 
 // InstallAll installs all go tools
-func InstallAll(ctx context.Context) error {
+func InstallAll(ctx context.Context, _ build.DepsFunc) error {
 	return build.InstallTools(ctx, tools)
 }
 
 // EnsureGo ensures that go is installed
-func EnsureGo(ctx context.Context) error {
+func EnsureGo(ctx context.Context, _ build.DepsFunc) error {
 	return build.EnsureTool(ctx, tools["go"])
 }
 
 // EnsureProtoC ensures that protoc is installed
-func EnsureProtoC(ctx context.Context) error {
+func EnsureProtoC(ctx context.Context, _ build.DepsFunc) error {
 	return build.EnsureTool(ctx, tools["protoc"])
 }
 
@@ -56,6 +56,6 @@ func EnsureGoProto(ctx context.Context, deps build.DepsFunc) error {
 }
 
 // EnsureGolangCI ensures that golangci is installed
-func EnsureGolangCI(ctx context.Context) error {
+func EnsureGolangCI(ctx context.Context, _ build.DepsFunc) error {
 	return build.EnsureTool(ctx, tools["golangci"])
 }
