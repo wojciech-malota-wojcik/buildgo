@@ -5,15 +5,14 @@ run:
     - simulation # used for unit tests which are used to generate some sample data
     - integrationtests # used by integration tests
 
-  skip-files:
-    - '.+\.pb\.go'      # exclude all protocol buffer generated files
-    - '.+\.proton\.go'  # exclude all proton generated files
-
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
   # disable some excludes that golangci-lint has by default. see https://github.com/golangci/golangci-lint
   exclude-use-default: false
+  exclude-files:
+    - '.+\.pb\.go'      # exclude all protocol buffer generated files
+    - '.+\.proton\.go'  # exclude all proton generated files
   # many golangci linters enforce stupid rules, so we will add more to the list soon
   exclude-rules:
     - linters:
