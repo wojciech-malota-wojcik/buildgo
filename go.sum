@@ -5,8 +5,8 @@ github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/outofforest/build/v2 v2.1.0 h1:ZcRfGagOhJG9nxsxnmQt2N26AkRJSJ+G1NIS7lDFXEg=
-github.com/outofforest/build/v2 v2.1.0/go.mod h1:FWz0mmvJjZVTBB1nW3ku34WV79J40ri5nZIkWCSfX6g=
+github.com/outofforest/build/v2 v2.2.0 h1:0fhPs9BWE4muKYfNZER9yAvEjqanXhrnYw7F0+aUdmM=
+github.com/outofforest/build/v2 v2.2.0/go.mod h1:GTO5VGlBK/68raLk81Wdj7JISq/Rsmm02lcZcYKiBgU=
 github.com/outofforest/libexec v0.3.9 h1:KvVLuKDHqpydwNoKm+j36hi9DVPU61X4oHonlZ5cw88=
 github.com/outofforest/libexec v0.3.9/go.mod h1:J2rUB/m0ER8UNOHd3/UQM55bvh1cbMwhb8gibeF/zyo=
 github.com/outofforest/logger v0.3.3/go.mod h1:+M5sO17Va9V33t28Qs9VqRQ8bFV501Uhq2PtQY+R3Ms=

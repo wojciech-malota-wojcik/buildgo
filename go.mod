@@ -3,7 +3,7 @@ module github.com/outofforest/tools
 go 1.22
 
 require (
-	github.com/outofforest/build/v2 v2.1.0
+	github.com/outofforest/build/v2 v2.2.0
 	github.com/outofforest/libexec v0.3.9
 	github.com/outofforest/logger v0.5.4
 	github.com/pkg/errors v0.9.1
