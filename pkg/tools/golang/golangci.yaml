@@ -61,6 +61,7 @@ linters:
     - exportloopref
     - execinquery
     - protogetter
+    - funlen
 
 linters-settings:
   nakedret:
