@@ -5,6 +5,10 @@ run:
     - simulation # used for unit tests which are used to generate some sample data
     - integrationtests # used by integration tests
 
+  skip-files:
+    - '.+\.pb\.go'      # exclude all protocol buffer generated files
+    - '.+\.proton\.go'  # exclude all proton generated files
+
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
