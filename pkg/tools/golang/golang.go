@@ -138,6 +138,7 @@ func UnitTests(ctx context.Context, deps types.DepsFunc) error {
 		cmd := exec.Command(
 			tools.Bin(ctx, "bin/go", tools.PlatformLocal),
 			"test",
+			"-tags=testing",
 			"-count=1",
 			"-shuffle=on",
 			"-race",
