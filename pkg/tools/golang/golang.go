@@ -50,6 +50,24 @@ type BuildConfig struct {
 	Tags []string
 }
 
+// Generate calls `go generate`.
+func Generate(ctx context.Context, deps types.DepsFunc) error {
+	deps(EnsureGo)
+	log := logger.Get(ctx)
+
+	return helpers.OnModule("go.mod", func(path string) error {
+		log.Info("Running go generate", zap.String("path", path))
+
+		cmd := exec.Command(tools.Bin(ctx, "bin/go", tools.PlatformLocal), "generate", "./...")
+		cmd.Env = env(ctx)
+		cmd.Dir = path
+		if err := libexec.Exec(ctx, cmd); err != nil {
+			return errors.Wrapf(err, "generation failed in module '%s'", path)
+		}
+		return nil
+	})
+}
+
 // Build builds go binary.
 func Build(ctx context.Context, deps types.DepsFunc, config BuildConfig) error {
 	if config.Platform.OS == tools.OSDocker {
