@@ -40,7 +40,6 @@ linters:
     - gochecknoglobals
     - err113
     - gofumpt
-    - gomnd
     - gomoddirectives
     - gosec
     - godox
@@ -62,7 +61,6 @@ linters:
     - dogsled
     - mnd
     - exportloopref
-    - execinquery
     - protogetter
     - funlen
 
