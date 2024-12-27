@@ -2,7 +2,6 @@ package zig
 
 import (
 	"context"
-	_ "embed"
 	"os/exec"
 	"path/filepath"
 
