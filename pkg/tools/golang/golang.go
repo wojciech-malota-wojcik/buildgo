@@ -34,7 +34,7 @@ type BuildConfig struct {
 	// Platform is the platform to build the binary for.
 	Platform tools.Platform
 
-	// PackagePath is the path to package to build relative to the ModulePath.
+	// PackagePath is the path to package to build.
 	PackagePath string
 
 	// BinOutputPath is the path for compiled binary file.
