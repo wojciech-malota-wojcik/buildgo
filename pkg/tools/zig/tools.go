@@ -7,7 +7,7 @@ import (
 	"github.com/outofforest/build/v2/pkg/types"
 )
 
-// Tool names.
+// Zig Too name.
 const Zig tools.Name = "zig"
 
 var t = []tools.Tool{
